@@ -35,4 +35,4 @@ jobs:
             docker pull anuragmadnaik/static-website:latest
             docker stop static-container || true
             docker rm static-container || true
-            docker run -d -p 80:80 --name static-container anuragmadnaik/static-website:latest
+            docker run -d -p 81:80 --name static-container anuragmadnaik/static-website:latest
