@@ -24,3 +24,15 @@ jobs:
 
       - name: Push Docker Image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/static-website:latest
+      
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull anuragmadnaik/static-website:latest
+            docker stop static-container || true
+            docker rm static-container || true
+            docker run -d -p 80:80 --name static-container anuragmadnaik/static-website:latest
